@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>本息平均攤還法(即本息定額攤還法)</title>
+		<style>@import url(https://35d8ffc5aee7af066b7e45dae29118bbfd1a4bac-www.googledrive.com/host/0ByMBO38X0JDdZUlnSE8zenRRcjQ/bank/css4bank.css);</style>
+		<script>
+			function IntToString(IntValue)
+			{
+				var Tempstr = '_' + IntValue
+				var TextString = "" ;
+				var IntCommon = 0
+				for	(i = 0; i < Tempstr.length-1 ; i++)
+				{
+					if (IntCommon == 3)
+					{
+						IntCommon = 0
+						TextString = "," + TextString
+					}
+					IntCommon = IntCommon + 1
+					TextString = Tempstr.charAt(Tempstr.length-1-i) + TextString
+				}
+				return TextString
+			}
+			
+			function Count_Now()
+			{	
+				var iP = document.Count.P.value;
+				var iN = document.Count.N.value;
+				var iSYear = document.Count.Year.value;
+				var iSMon = document.Count.Mon.value;
+				var dI = document.Count.I.value;
+				
+				if	((!isNaN(iP) && iP != "") && (!isNaN(iN) && iN != "") && (!isNaN(iSYear) && iSYear != "") && (!isNaN(iSMon) && iSMon != "") && (!isNaN(dI) && dI != ""))
+				{
+				  document.writeln("<!DOCTYPE html>");
+					document.writeln("<html lang='en'>");
+					document.writeln("<head>");
+					document.writeln("<meta charset='utf-8'>");
+					document.writeln("<meta http-equiv='X-UA-Compatible' content='IE=edge'>");
+					document.writeln("<meta name='viewport' content='width=device-width, initial-scale=1'>");
+					document.writeln("<title>本息平均攤還法(即本息定額攤還法)</title>");
+					document.writeln("<style>@import url(https://35d8ffc5aee7af066b7e45dae29118bbfd1a4bac-www.googledrive.com/host/0ByMBO38X0JDdZUlnSE8zenRRcjQ/bank/css4bank.css);</style>");
+					document.writeln("</head>");
+					document.writeln("<body bgcolor='#ffffff' text='#000000' leftmargin='0' topmargin='0' marginwidth='10' marginheight='0'>");
+					document.writeln("<form name='Show' method='POST'>");
+					document.writeln("<table border='0' cellspacing='0' cellpadding='0' width='90%' align='center'>");
+					document.writeln("<tr><td height='20'></td></tr>");
+					document.writeln("<tr><td><div style='FONT-SIZE: 14pt' align='center'><b>本息平均攤還法(即本息定額攤還法) </b></div></td></tr>");
+					document.writeln("<tr><td><table style='FONT-SIZE: 15pt' cellspacing='1' cellpadding='0' width='100%' border='1' align='center' bordercolor='#2360AD'>");
+					document.writeln("<tr bgcolor='#2360AD'><td colspan='2' height='21'><div align='center'><font color='#FFFFFF'>本息平均攤還試算</font></div></td></tr>");
+					document.writeln("<tr><td width='100' bgcolor='D8ebc5'><font>貸款金額：</font></td><td bgcolor='eff8d6'><font><B>&nbsp;" + IntToString(iP) + "&nbsp;</B>元</font></td></tr>");
+					document.writeln("<tr><td width='100' bgcolor='D8ebc5'><font>貸款總年數：</font></td><td bgcolor='eff8d6'><font><B>&nbsp;" + iN + "&nbsp;</B>年</font></td></tr>");
+					document.writeln("<tr><td width='100' bgcolor='D8ebc5'><font>貸款起始年月：</font></td><td bgcolor='eff8d6'><font>民國<B>&nbsp;" + iSYear + "&nbsp;</B>年<B>&nbsp;" + iSMon + "&nbsp;</B>月</font></td></tr>");
+					document.writeln("<tr><td width='100' bgcolor='D8ebc5'><font>貸款年利率：</font></td><td bgcolor='eff8d6'><font><B>&nbsp;" + dI + "&nbsp;</B>％</font></td></tr>");
+					document.writeln("<tr bgcolor='#2360AD'><td colspan='2'><p align=center><font>&nbsp;　　&nbsp;</font></p></td></tr>");
+					document.writeln("</table>");
+					document.writeln("<p style='FONT-SIZE: 14pt' align='center'><font color='#ff0000'>本試算僅在利率不變下適用，計算結果為一近似值，僅供參考</font>");
+					document.writeln("<br><input style='FONT-SIZE: 14pt' type='button' name='back' value='回上一頁' onclick='javascript:location.href=\"bank1.htm\";'></p></td></tr>");
+				
+					iP = parseInt(iP);
+					iN = parseInt(iN);
+					iSYear = parseInt(iSYear);
+					iSMon = parseInt(iSMon);
+					dI = parseFloat(dI);
+					
+					var remP = iP;
+					var i, ei1 = 1, ei2 = 1, ei3 = 1;
+					ei1 = Math.pow((1 + dI / 12 / 100), (iN * 12));
+					ei2 = ei1 * (dI/12/100);
+					ei3 = ei1 - 1;
+					var ei = ei2 / ei3;
+					
+					//原始公式
+					//var ei = ((Math.pow((1+ dI/12/100), (iN*12)))*(dI/12/100)) / (Math.pow((1+dI/12/100), (iN*12))-1);
+					
+					//每月應付本息 
+					var avpayP = Math.round(ei*iP);
+					var avpayM, avpayI;
+					
+					var totM = iSYear*12 + iSMon - 1;
+					
+					document.writeln("<table style='FONT-SIZE: 12pt' align='center' cellspacing='1' cellpadding='0' border='1' width='80%' bgcolor='#ffffff' bordercolor='#2360AD' height='50'>");
+					document.writeln("<tr>");
+					document.writeln("<td width='31%' bgcolor='#2360AD' height='3' align='center'><p><font color='#ffffff'>攤還年/月</font></p></td>");
+					document.writeln("<td width='23%' bgcolor='#2360AD' height='3' align='center'><font color='#ffffff'>每月應還<br>本金金額</font></td>");
+					document.writeln("<td width='23%' bgcolor='#2360AD' height='3' align='center'><font color='#ffffff'>每月應付<br>利息金額</font></td>");
+					document.writeln("<td width='23%' bgcolor='#2360AD' height='3' align='center'><font color='#ffffff'>每月應付<br>本息金額</font></td>");
+					document.writeln("</tr>");
+					
+					var k, Ym, Mm, Total_P = 0, Total_I = 0, Total_M = 0;
+					for	(k = 1; k <= iN*12; k++)
+					{
+						Ym = parseInt(totM / 12);
+						Mm = totM - ( Ym * 12) + 1;
+						//每月應付利息
+						avpayI = Math.round(remP*dI/12/100);
+						//每月應付本金
+						avpayM = avpayP - avpayI;
+						
+						document.writeln("<tr bgcolor='eff8d6'>");
+						document.writeln("<td width='31%' height='13' align='center'>民國" + Ym + "年" + Mm + "月</td>");
+						document.writeln("<td width='23%' height='13' align='center'>" + IntToString(avpayM) + "</td>");
+						document.writeln("<td width='23%' height='13' align='center'>" + IntToString(avpayI) + "</td>");
+						document.writeln("<td width='23%' height='13' align='center'>" + IntToString(avpayP) + "</td>");
+						document.writeln("</tr>");
+						
+						remP = remP - avpayM;
+						totM++;
+						Total_P += avpayP;
+						Total_I += avpayI;
+						Total_M += avpayM;
+					}
+					
+					document.writeln("<tr bgcolor='#008800'>");
+					document.writeln("<td width='31%' height='13' align='center'><font color='#FFFFFF'>總&nbsp;&nbsp;計</font></td>");
+					document.writeln("<td width='23%' height='13' align='center'><font color='#FFFFFF'>＄" + IntToString(Total_M) + "</font></td>");
+					document.writeln("<td width='23%' height='13' align='center'><font color='#FFFFFF'>＄" + IntToString(Total_I) + "</font></td>");
+					document.writeln("<td width='23%' height='13' align='center'><font color='#FFFFFF'>＄" + IntToString(Total_P) + "</font></td>");
+					document.writeln("</tr>");
+					
+					document.writeln("</table>");
+					//document.writeln("<p style='FONT-SIZE: 14pt' align='center'><font color='#ff0000'>本試算僅在利率不變下適用，計算結果為一近似值，僅供參考</font></p>");
+					document.writeln("</form>");
+					document.writeln("</body>");
+					document.writeln("</html>");
+					//location.reload(); 
+				}
+				else
+				{
+					alert("您輸入的資料有誤！");
+				}
+			}
+		</script>
+	</head>
+	<body bgcolor="#ffffff" text="#000000" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+		<table border="0" cellspacing="0" cellpadding="10">		    
+			<tr>				
+				<td>
+					<table width="100%" border="0" cellpadding="10" align="center">
+        <tr>
+          <td></td>
+        </tr>					    
+						<tr>
+							<td width="100%">
+								<div align="left"><font><span style="FONT-SIZE: 14pt; LINE-HEIGHT: 180%; BACKGROUND-COLOR: #feffcb"><font color="#800040"><img src="web.gif" width="24" height="24">本息平均攤還法</font><br><img src="web.gif" width="24" height="24"><a href="bank2.htm"><font><span style="FONT-SIZE: 10pt; LINE-HEIGHT: 180%; BACKGROUND-COLOR: #feffcb"><font color="#800040"></font></span></font><font color="#ff0000">本金平均攤還法</font><font><span style="FONT-SIZE: 10pt; LINE-HEIGHT: 180%; BACKGROUND-COLOR: #feffcb"><font color="#800040"></font></span></font></a><br><img src="web.gif" width="24" height="24"><a href="bank3.htm"><font color="#ff0000">本金到期一次清償法</font></a><br><img src="web.gif" width="24" height="24"><a href="bank4.htm"><font color="#ff0000">有寬限期攤還法</font></a></span></font></div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		<table border="0" cellpadding="10" width="100%">
+				<tr>
+					<td>
+						<div style="FONT-SIZE: 14pt" align="center"><b>本息平均攤還法(即本息定額攤還法) </b>
+						</div>
+					</td>
+				</tr>
+		  <tbody>
+					<tr style="FONT-SIZE: 12pt">
+						<td>
+							<ol>
+								<li>
+									<font>條件： </font>
+							<ol type="A">
+								<li>
+									<font>計算基礎為採年金法將貸款期間內全部貸款本金與利息平均分攤於每一期中償付。 </font>
+								<li>
+									<font>以貸款利率不變為要件，求出每月之平均攤還率，故當利率調整時，必須依剩餘期間重新計算。 </font>
+								</li>
+							</ol>
+							<li>
+								<font>特點： </font>
+								<ol type="A">
+							<li>
+								<font>在利率不變的條件下，每月攤還金額相等，對於還款預算較易掌握。 </font>
+							<li>
+								<font>由於每月償付之貸款本息金額相等，故有本金償付金額逐月遞增及利
+									息償付金額逐月遞減現象。 </font>
+							<li>
+								<font>計算過程較為複雜。 </font>
+							</li>
+							</ol>
+							<li>
+								<font>計算方式： </font>
+								<ol type="A">
+							<li>
+								<font>試算公式：<br>
+									每月應付本息金額之平均攤還率
+									＝{[(1＋月利率)^月數]×月利率}÷{[(1＋月利率)^月數]－1}<br>
+									(公式中：月利率 ＝ 年利率／12 ； 月數=貸款年期 ｘ 12) </font>
+							<li>
+								<font>每月應攤還本金與利息試算： </font>
+								<ul>
+									<li>
+										<font>平均每月應攤付本息金額＝貸款本金×每月應付本息金額之平均攤還率
+											＝每月應還本金金額＋每月應付利息金額 </font>
+									<li>
+										<font>每月應付利息金額＝本金餘額×月利率 </font>
+									<li>
+										<font>每月應還本金金額＝平均每月應攤付本息金額－每月應付利息金額 </font>
+									</li>
+								</ul>
+							</li>
+							</ol> </li> </ol>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<form name="Count" mehtod="post">
+								<table width="100%" border="1" align="center" bordercolor="#2360AD" style="FONT-SIZE: 14pt">
+									<tr bgcolor="#2360AD">
+										<td height="21" colspan="2">
+									  <div align="center"><font color="#ffffff">本息平均攤還試算</font></div>									  </td>
+									</tr>
+									<tr>
+										<td width="400" bgcolor="#d8ebc5"><font>您的貸款金額是：</font></td>
+										<td bgcolor="#eff8d6"><font><input style="FONT-SIZE: 14pt" type="text" name="P" size="11" maxLength="10">
+													元</font></td>
+									</tr>
+									<tr>
+										<td width="400" bgcolor="#d8ebc5"><font>貸款年數：</font></td>
+										<td bgcolor="#eff8d6"><font> <input style="FONT-SIZE: 14pt" type="text" name="N" size="11" maxLength="2">
+												年</font></td>
+									</tr>
+									<tr>
+										<td width="400" bgcolor="#d8ebc5"><font>貸款起始(民國)年月是：</font></td>
+										<td bgcolor="#eff8d6"><font><input style="FONT-SIZE: 14pt" type="text" name="Year" size="3" maxLength="3">
+												年 <input style="FONT-SIZE: 14pt" type="text" name="Mon" size="3" maxLength="2">月</font></td>
+									</tr>
+									<tr>
+										<td width="400" bgcolor="#d8ebc5"><font>年利率： </font>
+										</td>
+										<td bgcolor="#eff8d6"><font> <input style="FONT-SIZE: 14pt" type="text" name="I" size="11" maxLength="6">
+												％</font></td>
+									</tr>
+									<tr bgcolor="#2360AD" style="FONT-SIZE: 14pt">
+										<td colspan="2">
+											<p align="center">
+												<font><input style="FONT-SIZE: 14pt" type="button" value="試算" name="OK" onclick="Count_Now()"> <input style="FONT-SIZE: 14pt" type="reset" value="取消" name="Cancel">
+												</font>
+											</p>
+										</td>
+									</tr>
+								</table>
+								<br>
+								<p style='FONT-SIZE: 14pt' align="center"><font color="#ff0000">本試算僅在利率不變下適用，計算結果為一近似值，僅供參考</font>
+									<br>
+								</p>
+							</form>
+						</td>
+					</tr>
+		  </tbody>
+		</table>
+	</body>
+</html>
